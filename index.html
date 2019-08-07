@@ -19,15 +19,17 @@
     </nav>
     <main class="row no-gutters flex-fill">
       <section id="map" class="col-7 map"></section>
-      <section id="list" class="col-5 overflow-auto">
-        <div v-for="restaurant in restaurants" v-bind:id="'div' + restaurant.id" class="row no-gutters m-3">
-          <div class="col-4">
-            <img class="img-fluid" v-bind:src="restaurant.thumb">
-          </div>
-          <div class="col-8 pl-3 justify-content-center align-self-center">
-            <h5>{{restaurant.name}}</h5>
-            <div class="mb-2">{{restaurant.cuisines}}</div>
-            <div class="mb-2">{{restaurant.timings}}</div>
+      <section class="col-5">
+        <div id="list" class="position-absolute h-100 overflow-auto">
+          <div v-for="restaurant in restaurants" v-bind:id="'div' + restaurant.id" class="row no-gutters m-3">
+            <div class="col-4">
+              <img class="img-fluid" v-bind:src="restaurant.thumb">
+            </div>
+            <div class="col-8 pl-3 justify-content-center align-self-center">
+              <h5>{{restaurant.name}}</h5>
+              <div class="mb-2">{{restaurant.cuisines}}</div>
+              <div class="mb-2">{{restaurant.timings}}</div>
+            </div>
           </div>
         </div>
       </section>
