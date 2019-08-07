@@ -12,6 +12,13 @@ var map = new ol.Map({
   })
 });
 
+var vue = new Vue({
+  el: '#list',
+  data: {
+    restaurants: []
+  }
+});
+
 fetchRestaurants();
 
 function fetchRestaurants() {
@@ -33,15 +40,16 @@ function fetchRestaurants() {
 
 function fetchDone(json) {
   json.restaurants.forEach(elem => {
-    var location = elem.restaurant.location;
-    addMarker([parseFloat(location.longitude), parseFloat(location.latitude)]);
+    addMarker(elem.restaurant.id, elem.restaurant.location);
+    vue.restaurants.push(elem.restaurant);
+    setEventHandlers(elem.restaurant.id, elem.restaurant.name);
   });
 }
 
-function addMarker(lonlat) {
-  var position = ol.proj.fromLonLat(lonlat);
+function addMarker(id, location) {
+  var position = ol.proj.fromLonLat([parseFloat(location.longitude), parseFloat(location.latitude)]);
   var element = document.createElement('div');
-  element.innerHTML = '<img src="img/pin.png">';
+  element.innerHTML = '<img id="pin' + id + '" src="img/pin.png">';
   var marker = new ol.Overlay({
     position: position,
     positioning: 'bottom-center',
@@ -49,4 +57,17 @@ function addMarker(lonlat) {
     stopEvent: false
   });
   map.addOverlay(marker);
+}
+
+function setEventHandlers(id, name) {
+  $('#pin' + id)
+    .click(() => {
+      var top = $('#list').scrollTop() + $('#div' + id).position().top;
+      $('#list').animate({ scrollTop: top }, () => {
+        $('#div' + id).fadeOut().fadeIn();
+      });
+    })
+    .attr('data-toggle', 'tooltip')
+    .attr('title', name)
+    .tooltip();
 }

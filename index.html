@@ -17,19 +17,29 @@
       <span class="ml-auto">Takanori Hoshi (300306402)</span>
     </nav>
     <main class="row no-gutters flex-fill">
-      <section id="map" class="col-8 map"></section>
-      <section class="col-4 overflow-auto">
-        List
+      <section id="map" class="col-7 map"></section>
+      <section id="list" class="col-5 overflow-auto">
+        <div v-for="restaurant in restaurants" v-bind:id="'div' + restaurant.id" class="row no-gutters m-3">
+          <div class="col-4">
+            <img class="img-fluid" v-bind:src="restaurant.thumb">
+          </div>
+          <div class="col-8 pl-3 justify-content-center align-self-center">
+            <h5>{{restaurant.name}}</h5>
+            <div class="mb-2">{{restaurant.cuisines}}</div>
+            <div class="mb-2">{{restaurant.timings}}</div>
+          </div>
+        </div>
       </section>
     </main>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>
