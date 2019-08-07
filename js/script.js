@@ -1,3 +1,6 @@
+/* CSIS 3380 Project by Takanori Hoshi (300306402) */
+
+// Initialize the OpenLayers map
 var lonlat = [-122.9131, 49.2026];
 var map = new ol.Map({
   target: 'map',
@@ -12,6 +15,7 @@ var map = new ol.Map({
   })
 });
 
+// Initialize the restaurant list
 var vue = new Vue({
   el: '#list',
   data: {
@@ -23,6 +27,7 @@ $('#refresh').click(fetchRestaurants);
 
 fetchRestaurants();
 
+// Fetch the restaurant list from Zomato API
 function fetchRestaurants() {
   $('#refresh').addClass('disabled');
   map.getOverlays().clear();
@@ -50,6 +55,7 @@ function fetchRestaurants() {
     });
 }
 
+// Fetch done
 function fetchDone(json) {
   $('#refresh').removeClass('disabled');
   json.restaurants.forEach(elem => {
@@ -59,6 +65,7 @@ function fetchDone(json) {
   });
 }
 
+// Add marker for each restaurant on the map
 function addMarker(id, location) {
   var position = ol.proj.fromLonLat([parseFloat(location.longitude), parseFloat(location.latitude)]);
   var element = document.createElement('div');
@@ -72,6 +79,7 @@ function addMarker(id, location) {
   map.addOverlay(marker);
 }
 
+// Set click event handler and tooltip for the marker
 function setEventHandlers(id, name) {
   $('#pin' + id)
     .click(() => {
