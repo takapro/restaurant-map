@@ -19,9 +19,15 @@ var vue = new Vue({
   }
 });
 
+$('#refresh').click(fetchRestaurants);
+
 fetchRestaurants();
 
 function fetchRestaurants() {
+  $('#refresh').addClass('disabled');
+  map.getOverlays().clear();
+  vue.restaurants = [];
+
   var headers = new Headers();
   headers.append('Accept', 'application/json');
   headers.append('user-key', 'a4de784efbd48d9ad1c1a00a0c203e19');
@@ -31,14 +37,21 @@ function fetchRestaurants() {
     mode: 'cors',
     cache: 'default'
   };
+
+  var lonlat = ol.proj.toLonLat(map.getView().getCenter());
   var url = 'https://developers.zomato.com/api/v2.1/search?' +
     'lat=' + lonlat[1] + '&lon=' + lonlat[0] + '&start=0&sort=real_distance';
   fetch(url, params)
     .then(resp => resp.json())
-    .then(json => fetchDone(json));
+    .then(json => fetchDone(json))
+    .catch(err => {
+      $('#refresh').removeClass('disabled');
+      alert('Failed to fetch restaurants: ' + err);
+    });
 }
 
 function fetchDone(json) {
+  $('#refresh').removeClass('disabled');
   json.restaurants.forEach(elem => {
     addMarker(elem.restaurant.id, elem.restaurant.location);
     vue.restaurants.push(elem.restaurant);
